@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>eu.lundegaard.commons.java</groupId>
+        <artifactId>parent-pom</artifactId>
+        <version>3.3.0</version>
+    </parent>
+
+    <groupId>eu.lundegaard.commons.java</groupId>
+    <artifactId>rest</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <name>Lundegaard Commons :: Rest Commons Library</name>
+    <description>
+        This library is used for simple startup with REST services
+    </description>
+    <url>https://github.com/lundegaard/lundegaard-commons-java-rest</url>
+
+
+</project>
