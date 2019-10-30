@@ -11,4 +11,7 @@ public interface TestFeignClient {
 
     @RequestLine("GET /json")
     public TestDto testJsonResponse();
+
+    @RequestLine("GET /byte")
+    public byte[] testByteResponse();
 }

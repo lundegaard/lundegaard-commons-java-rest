@@ -1,7 +1,6 @@
 package eu.lundegaard.commons.rest;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import org.assertj.core.api.Assertions;
 import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,6 +11,7 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author ales.nevrela (ales.nevrela@lundegaard.eu)
@@ -25,31 +25,42 @@ public class FeignClientFactoryTest {
 
 
     @Test
-    public void whenRequestIsJson_thenDeserializeJavaTypes() throws Exception {
+    public void whenRequestIsJson_thenDeserializeJavaTypes() {
         stubFor(get(urlEqualTo("/json")).willReturn(
             aResponse().withBody(FULL_RESPONSE))
         );
 
         TestDto result = testSubject.testJsonResponse();
 
-        Assertions.assertThat(TEXT)
-            .isEqualTo(result.getStringProperty());
-        Assertions.assertThat(NUMBER)
-            .isEqualTo(result.getIntProperty());
-        Assertions.assertThat(DECIMAL)
-            .isEqualTo(result.getBigDecimalProperty());
-        Assertions.assertThat(DATETIME.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant())
-            .isEqualTo(result.getDateProperty().toInstant());
-        Assertions.assertThat(DATETIME.toLocalDate())
-            .isEqualTo(result.getLocalDateProperty());
-        Assertions.assertThat(DATETIME.toLocalTime())
-            .isEqualTo(result.getLocalTimeProperty());
-        Assertions.assertThat(DATETIME)
-            .isEqualTo(result.getLocalDateTimeProperty());
-        Assertions.assertThat(DATETIME.atOffset(ZoneOffset.ofHours(-1)))
-            .isEqualTo(result.getOffsetDateTimeProperty());
-        Assertions.assertThat(DATETIME.atOffset(ZoneOffset.ofHours(-1)))
-            .isEqualTo(result.getZonedDateTimeProperty().toOffsetDateTime());
+        assertThat(result.getStringProperty())
+            .isEqualTo(TEXT);
+        assertThat(result.getIntProperty())
+            .isEqualTo(NUMBER);
+        assertThat(result.getBigDecimalProperty())
+            .isEqualTo(DECIMAL);
+        assertThat(result.getDateProperty().toInstant())
+            .isEqualTo(DATETIME.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+        assertThat(result.getLocalDateProperty())
+            .isEqualTo(DATETIME.toLocalDate());
+        assertThat(result.getLocalTimeProperty())
+            .isEqualTo(DATETIME.toLocalTime());
+        assertThat(result.getLocalDateTimeProperty())
+            .isEqualTo(DATETIME);
+        assertThat(result.getOffsetDateTimeProperty())
+            .isEqualTo(DATETIME.atOffset(ZoneOffset.ofHours(-1)));
+        assertThat(result.getZonedDateTimeProperty().toOffsetDateTime())
+            .isEqualTo(DATETIME.atOffset(ZoneOffset.ofHours(-1)));
+    }
+
+    @Test
+    public void whenRequestIsByteArray_thenDeserializeByteArray() {
+        stubFor(get(urlEqualTo("/byte")).willReturn(
+            aResponse().withBody(BYTE_RESPONSE))
+        );
+
+        byte[] result = testSubject.testByteResponse();
+
+        assertThat(BYTE_RESPONSE).isEqualTo(result);
     }
 
     private static final String TEXT = "Text value";
@@ -72,5 +83,6 @@ public class FeignClientFactoryTest {
         .put("offsetDateTimeProperty", DATETIME_STRING + ZONE_STRING)
         .put("zonedDateTimeProperty", DATETIME_STRING + ZONE_STRING)
         .toString();
+    private static final byte[] BYTE_RESPONSE = new byte[]{77};
 
 }

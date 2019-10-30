@@ -52,6 +52,7 @@
         <!-- Versions -->
         <feign.version>9.7.0</feign.version>
         <jackson.version>3.1.0</jackson.version>
+        <commons-io.version>2.6</commons-io.version>
         <wiremock.version>2.16.0</wiremock.version>
         <json.version>20190722</json.version>
         <junit.version>4.12</junit.version>
@@ -73,6 +74,11 @@
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-jackson</artifactId>
             <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
         </dependency>
 
         <!--Test dependencies-->
