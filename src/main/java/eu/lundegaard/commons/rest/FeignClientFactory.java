@@ -1,3 +1,17 @@
+/*
+ * Copyright (C) 2019 Lundegaard a.s., All Rights Reserved
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; version 3.0 of the License.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * https://www.gnu.org/licenses/lgpl-3.0.html
+ */
 package eu.lundegaard.commons.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +52,8 @@ public class FeignClientFactory {
     }
 
     /**
-     * Creates preconfigured Feign client implementation and binds it to the target URL address
+     * Creates preconfigured Feign client implementation and binds it to the target
+     * URL address
      *
      * @param clientType - Feign client interface
      * @param target - target URL address
@@ -47,20 +62,21 @@ public class FeignClientFactory {
      */
     public <T> T create(Class<T> clientType, String target) {
         return builder(clientType)
-            .target(clientType, target);
+                .target(clientType, target);
     }
 
     /**
-     * Creates preconfigured {@link Feign.Builder Feign builder} for additional configuration and building Feign clients
+     * Creates preconfigured {@link Feign.Builder Feign builder} for additional
+     * configuration and building Feign clients
      *
      * @return Preconfigured Feign client builder
      */
     public <T> Feign.Builder builder(Class<T> clientType) {
         return Feign.builder()
-            .encoder(jacksonEncoder)
-            .decoder(jacksonDecoder)
-            .logger(new Slf4jLogger(clientType))
-            .logLevel(feign.Logger.Level.FULL)
-            .errorDecoder(errorDecoder);
+                .encoder(jacksonEncoder)
+                .decoder(jacksonDecoder)
+                .logger(new Slf4jLogger(clientType))
+                .logLevel(feign.Logger.Level.FULL)
+                .errorDecoder(errorDecoder);
     }
 }
