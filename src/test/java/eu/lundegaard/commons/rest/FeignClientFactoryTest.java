@@ -2,6 +2,8 @@ package eu.lundegaard.commons.rest;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import eu.lundegaard.commons.rest.error.FeignClientException;
+import eu.lundegaard.commons.rest.testclasses.TestDto;
+import eu.lundegaard.commons.rest.testclasses.TestFeignClient;
 import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 import org.junit.Rule;

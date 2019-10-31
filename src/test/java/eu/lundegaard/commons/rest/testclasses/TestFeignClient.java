@@ -1,4 +1,4 @@
-package eu.lundegaard.commons.rest;
+package eu.lundegaard.commons.rest.testclasses;
 
 import feign.RequestLine;
 

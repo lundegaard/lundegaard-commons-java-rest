@@ -1,4 +1,4 @@
-package eu.lundegaard.commons.rest;
+package eu.lundegaard.commons.rest.testclasses;
 
 import java.math.BigDecimal;
 import java.time.*;

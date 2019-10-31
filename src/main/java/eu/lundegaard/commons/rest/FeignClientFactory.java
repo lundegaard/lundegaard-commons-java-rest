@@ -19,16 +19,22 @@ import feign.slf4j.Slf4jLogger;
  */
 public class FeignClientFactory {
 
-    private static final Decoder jacksonDecoder;
-    private static final Encoder jacksonEncoder;
-    private static final ErrorDecoder errorDecoder;
+    private final Decoder jacksonDecoder;
+    private final Encoder jacksonEncoder;
+    private final ErrorDecoder errorDecoder;
 
-    static {
+    public FeignClientFactory() {
         // Preconfigured Lundegaard mapper
         ObjectMapper mapper = ObjectMapperFactory.createObjectMapper();
         jacksonDecoder = new ByteArrayAwareDecoder(new JacksonDecoder(mapper));
         jacksonEncoder = new JacksonEncoder(mapper);
         errorDecoder = new FeignClientExceptionDecoder();
+    }
+
+    public FeignClientFactory(Decoder jacksonDecoder, Encoder jacksonEncoder, ErrorDecoder errorDecoder) {
+        this.jacksonDecoder = jacksonDecoder;
+        this.jacksonEncoder = jacksonEncoder;
+        this.errorDecoder = errorDecoder;
     }
 
     /**
@@ -39,7 +45,7 @@ public class FeignClientFactory {
      * @param <T> - Feign client interface type
      * @return Preconfigured Feign client
      */
-    public static <T> T create(Class<T> clientType, String target) {
+    public <T> T create(Class<T> clientType, String target) {
         return builder(clientType)
             .target(clientType, target);
     }
@@ -49,7 +55,7 @@ public class FeignClientFactory {
      *
      * @return Preconfigured Feign client builder
      */
-    public static <T> Feign.Builder builder(Class<T> clientType) {
+    public <T> Feign.Builder builder(Class<T> clientType) {
         return Feign.builder()
             .encoder(jacksonEncoder)
             .decoder(jacksonDecoder)
