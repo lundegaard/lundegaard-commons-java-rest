@@ -3,9 +3,11 @@ package eu.lundegaard.commons.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.lundegaard.commons.jackson.ObjectMapperFactory;
 import eu.lundegaard.commons.rest.decoder.ByteArrayAwareDecoder;
+import eu.lundegaard.commons.rest.error.FeignClientExceptionDecoder;
 import feign.Feign;
 import feign.codec.Decoder;
 import feign.codec.Encoder;
+import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import feign.slf4j.Slf4jLogger;
@@ -19,12 +21,14 @@ public class FeignClientFactory {
 
     private static final Decoder jacksonDecoder;
     private static final Encoder jacksonEncoder;
+    private static final ErrorDecoder errorDecoder;
 
     static {
         // Preconfigured Lundegaard mapper
         ObjectMapper mapper = ObjectMapperFactory.createObjectMapper();
         jacksonDecoder = new ByteArrayAwareDecoder(new JacksonDecoder(mapper));
         jacksonEncoder = new JacksonEncoder(mapper);
+        errorDecoder = new FeignClientExceptionDecoder();
     }
 
     /**
@@ -50,6 +54,7 @@ public class FeignClientFactory {
             .encoder(jacksonEncoder)
             .decoder(jacksonDecoder)
             .logger(new Slf4jLogger(clientType))
-            .logLevel(feign.Logger.Level.FULL);
+            .logLevel(feign.Logger.Level.FULL)
+            .errorDecoder(errorDecoder);
     }
 }

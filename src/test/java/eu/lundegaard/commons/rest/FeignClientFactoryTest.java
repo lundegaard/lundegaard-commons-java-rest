@@ -1,6 +1,8 @@
 package eu.lundegaard.commons.rest;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import eu.lundegaard.commons.rest.error.FeignClientException;
+import org.apache.http.HttpStatus;
 import org.json.JSONObject;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import java.time.ZoneOffset;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author ales.nevrela (ales.nevrela@lundegaard.eu)
@@ -19,13 +22,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FeignClientFactoryTest {
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(9090);
+    public WireMockRule wireMockRule = new WireMockRule(9090); // Mock server running on http://localhost:9090
 
     private TestFeignClient testSubject = FeignClientFactory.create(TestFeignClient.class, "http://localhost:9090");
 
 
     @Test
-    public void whenRequestIsJson_thenDeserializeJavaTypes() {
+    public void whenResponseIsJson_thenDeserializeJavaTypes() {
         stubFor(get(urlEqualTo("/json")).willReturn(
             aResponse().withBody(FULL_RESPONSE))
         );
@@ -53,7 +56,7 @@ public class FeignClientFactoryTest {
     }
 
     @Test
-    public void whenRequestIsByteArray_thenDeserializeByteArray() {
+    public void whenResponseIsByteArray_thenDeserializeByteArray() {
         stubFor(get(urlEqualTo("/byte")).willReturn(
             aResponse().withBody(BYTE_RESPONSE))
         );
@@ -61,6 +64,42 @@ public class FeignClientFactoryTest {
         byte[] result = testSubject.testByteResponse();
 
         assertThat(BYTE_RESPONSE).isEqualTo(result);
+    }
+
+
+    @Test
+    public void whenResponseIs3xx_thenThrowException() {
+        stubFor(get(urlEqualTo("/json")).willReturn(
+            aResponse().withStatus(HttpStatus.SC_MOVED_PERMANENTLY))
+        );
+
+        assertThatThrownBy(() -> testSubject.testJsonResponse())
+            .isInstanceOf(FeignClientException.class)
+            .hasFieldOrPropertyWithValue("responseStatus", HttpStatus.SC_MOVED_PERMANENTLY);
+    }
+
+
+    @Test
+    public void whenResponseIs4xxError_thenThrowException() {
+        stubFor(get(urlEqualTo("/json")).willReturn(
+            aResponse().withStatus(HttpStatus.SC_NOT_FOUND))
+        );
+
+        assertThatThrownBy(() -> testSubject.testJsonResponse())
+            .isInstanceOf(FeignClientException.class)
+            .hasFieldOrPropertyWithValue("responseStatus", HttpStatus.SC_NOT_FOUND);
+    }
+
+
+    @Test
+    public void whenResponseIs5xxError_thenThrowException() {
+        stubFor(get(urlEqualTo("/json")).willReturn(
+            aResponse().withStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR))
+        );
+
+        assertThatThrownBy(() -> testSubject.testJsonResponse())
+            .isInstanceOf(FeignClientException.class)
+            .hasFieldOrPropertyWithValue("responseStatus", HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
 
     private static final String TEXT = "Text value";
