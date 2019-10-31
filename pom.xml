@@ -10,7 +10,6 @@
         <version>3.3.0</version>
     </parent>
 
-    <groupId>eu.lundegaard.commons.java</groupId>
     <artifactId>rest</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
@@ -51,19 +50,33 @@
     <properties>
         <!-- Versions -->
         <feign.version>9.7.0</feign.version>
-        <jackson.version>3.1.0</jackson.version>
+        <lnd.jackson.version>3.1.0</lnd.jackson.version>
+        <lnd.utils.version>3.2.0</lnd.utils.version>
+        <jackson-databind.version>2.9.9</jackson-databind.version>
         <commons-io.version>2.6</commons-io.version>
         <wiremock.version>2.16.0</wiremock.version>
         <json.version>20190722</json.version>
         <junit.version>4.12</junit.version>
         <assertj-core.version>3.12.2</assertj-core.version>
+        <slf4j-api.version>1.7.28</slf4j-api.version>
+        <httpcore.version>4.4.6</httpcore.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>eu.lundegaard.commons.java</groupId>
             <artifactId>jackson</artifactId>
-            <version>${jackson.version}</version>
+            <version>${lnd.jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.lundegaard.commons.java</groupId>
+            <artifactId>utils</artifactId>
+            <version>${lnd.utils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.openfeign</groupId>
@@ -85,6 +98,11 @@
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
 
         <!--Test dependencies-->
         <dependency>
@@ -100,18 +118,36 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${json.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj-core.version}</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>${httpcore.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
