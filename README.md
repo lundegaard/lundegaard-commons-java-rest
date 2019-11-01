@@ -1,6 +1,6 @@
 # Lundegaard Java Commons - Rest
 
-This library is used for simple startup with REST services
+This library is used for simple creation of REST clients using the OpenFeign library. 
 
 ## Usage
 
@@ -51,7 +51,7 @@ You may change or extend default configuration using Feign builder
 ```java
 public GoogleMapsClient createGoogleMapsClient() {
     return FeignClientUtil.builder(GoogleMapsClient.class)
-        // Do you configuration. For example retry when service is unavailable
+        // Do your configuration. For example retry when service is unavailable
         // .retryer(new MyRetryer())
         .target(GoogleMapsClient.class, "http://maps.googleapis.com");
 }
