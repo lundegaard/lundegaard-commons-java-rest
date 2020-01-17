@@ -17,7 +17,7 @@ set -e -x
 
 # Build develop
 git checkout develop
-mvn clean package
+mvn clean package -P release
 
 # Create release branch
 git branch release/$1 develop
@@ -28,13 +28,13 @@ mvn versions:set -DnewVersion="$1" -DgenerateBackupPoms=false
 git add "*pom.xml"
 git commit -m "release/$1 Maven project version set to $1"
 
-# Build and analyze with sonar
-mvn clean jacoco:prepare-agent install sonar:sonar -P lundegaard-sonar
-
 # Finish the release branch
 git checkout master
 git merge -m "Merge branch 'release/$1' into master" --no-ff release/$1
 git branch -d release/$1
+
+# Build and analyze with sonar
+mvn clean jacoco:prepare-agent install sonar:sonar -P lundegaard-sonar
 
 # Build new production artifacts
 mvn clean deploy -P release
