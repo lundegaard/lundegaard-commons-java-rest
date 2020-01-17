@@ -115,7 +115,7 @@ public class FeignClientFactoryTest {
     private static final int NUMBER = 33;
     private static final BigDecimal DECIMAL = BigDecimal.valueOf(922337203685477583L, 8);
     private static final String DATE_STRING = "2019-11-17";
-    private static final String TIME_STRING = "15:45:55.789";
+    private static final String TIME_STRING = "15:45:55.777888999";
     private static final String DATETIME_STRING = DATE_STRING + "T" + TIME_STRING;
     private static final String ZONE_STRING = "-01:00";
     private static final LocalDateTime DATETIME = LocalDateTime.parse(DATETIME_STRING);
