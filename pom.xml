@@ -10,15 +10,156 @@
         <version>3.3.0</version>
     </parent>
 
-    <groupId>eu.lundegaard.commons.java</groupId>
     <artifactId>rest</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <name>Lundegaard Commons :: Rest Commons Library</name>
     <description>
-        This library is used for simple startup with REST services
+        Library used for quick creation of REST clients
     </description>
     <url>https://github.com/lundegaard/lundegaard-commons-java-rest</url>
 
+    <organization>
+        <name>Lundegaard a.s.</name>
+        <url>https://www.lundegaard.eu</url>
+    </organization>
+
+    <issueManagement>
+        <system>Jira</system>
+        <url>https://jira.lnd.bz</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>Jenkins</system>
+        <url>https://jenkins.lnd.bz</url>
+    </ciManagement>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License 3.0</name>
+            <url>https://www.gnu.org/licenses/lgpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <inceptionYear>2019</inceptionYear>
+
+    <developers>
+        <developer>
+            <id>ales.nevrela</id>
+            <name>Aleš Nevřela</name>
+            <email>ales.nevrela@lundegaard.eu</email>
+            <organization>Lundegaard a.s.</organization>
+            <organizationUrl>https://www.lundegaard.eu</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/lundegaard/lundegaard-commons-java-rest.git</connection>
+        <developerConnection>scm:git:ssh://github.com:lundegaard/lundegaard-commons-java-rest.git</developerConnection>
+        <url>https://github.com/lundegaard/lundegaard-commons-java-rest/tree/master</url>
+    </scm>
+
+    <properties>
+        <!-- Versions -->
+        <feign.version>9.7.0</feign.version>
+        <lnd.jackson.version>3.1.0</lnd.jackson.version>
+        <lnd.utils.version>3.2.0</lnd.utils.version>
+        <jackson-databind.version>2.9.9</jackson-databind.version>
+        <commons-io.version>2.6</commons-io.version>
+        <wiremock.version>2.16.0</wiremock.version>
+        <json.version>20190722</json.version>
+        <junit.version>4.12</junit.version>
+        <assertj-core.version>3.12.2</assertj-core.version>
+        <slf4j-api.version>1.7.28</slf4j-api.version>
+        <httpcore.version>4.4.6</httpcore.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>eu.lundegaard.commons.java</groupId>
+            <artifactId>jackson</artifactId>
+            <version>${lnd.jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.lundegaard.commons.java</groupId>
+            <artifactId>utils</artifactId>
+            <version>${lnd.utils.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-databind.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+            <version>${feign.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api.version}</version>
+        </dependency>
+
+        <!--Test dependencies-->
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>${wiremock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${json.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>${httpcore.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
