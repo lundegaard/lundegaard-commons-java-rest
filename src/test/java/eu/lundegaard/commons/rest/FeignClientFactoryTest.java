@@ -43,7 +43,7 @@ public class FeignClientFactoryTest {
 
     @Test
     public void whenResponseIsJson_thenDeserializeJavaTypes() {
-        stubFor(get(urlEqualTo("/json")).willReturn(
+        stubFor(get(urlEqualTo(JSON_ENDPOINT)).willReturn(
                 aResponse().withBody(FULL_RESPONSE)));
 
         TestDto result = testSubject.testJsonResponse();
@@ -70,7 +70,7 @@ public class FeignClientFactoryTest {
 
     @Test
     public void whenResponseIsByteArray_thenDeserializeByteArray() {
-        stubFor(get(urlEqualTo("/byte")).willReturn(
+        stubFor(get(urlEqualTo(BYTE_ENDPOINT)).willReturn(
                 aResponse().withBody(BYTE_RESPONSE)));
 
         byte[] result = testSubject.testByteResponse();
@@ -81,35 +81,40 @@ public class FeignClientFactoryTest {
 
     @Test
     public void whenResponseIs3xx_thenThrowException() {
-        stubFor(get(urlEqualTo("/json")).willReturn(
+        stubFor(get(urlEqualTo(JSON_ENDPOINT)).willReturn(
                 aResponse().withStatus(HttpStatus.SC_MOVED_PERMANENTLY)));
 
         assertThatThrownBy(() -> testSubject.testJsonResponse())
                 .isInstanceOf(FeignClientException.class)
-                .hasFieldOrPropertyWithValue("responseStatus", HttpStatus.SC_MOVED_PERMANENTLY);
+                .hasFieldOrPropertyWithValue(FIELD_RESPONSE_STATUS, HttpStatus.SC_MOVED_PERMANENTLY);
     }
 
 
     @Test
     public void whenResponseIs4xxError_thenThrowException() {
-        stubFor(get(urlEqualTo("/json")).willReturn(
+        stubFor(get(urlEqualTo(JSON_ENDPOINT)).willReturn(
                 aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 
         assertThatThrownBy(() -> testSubject.testJsonResponse())
                 .isInstanceOf(FeignClientException.class)
-                .hasFieldOrPropertyWithValue("responseStatus", HttpStatus.SC_NOT_FOUND);
+                .hasFieldOrPropertyWithValue(FIELD_RESPONSE_STATUS, HttpStatus.SC_NOT_FOUND);
     }
 
 
     @Test
     public void whenResponseIs5xxError_thenThrowException() {
-        stubFor(get(urlEqualTo("/json")).willReturn(
+        stubFor(get(urlEqualTo(JSON_ENDPOINT)).willReturn(
                 aResponse().withStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR)));
 
         assertThatThrownBy(() -> testSubject.testJsonResponse())
                 .isInstanceOf(FeignClientException.class)
-                .hasFieldOrPropertyWithValue("responseStatus", HttpStatus.SC_INTERNAL_SERVER_ERROR);
+                .hasFieldOrPropertyWithValue(FIELD_RESPONSE_STATUS, HttpStatus.SC_INTERNAL_SERVER_ERROR);
     }
+
+
+    private static final String JSON_ENDPOINT = "/json";
+    private static final String BYTE_ENDPOINT = "/byte";
+    private static final String FIELD_RESPONSE_STATUS = "responseStatus";
 
     private static final String TEXT = "Text value";
     private static final int NUMBER = 33;
