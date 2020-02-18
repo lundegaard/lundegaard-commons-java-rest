@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>rest</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <name>Lundegaard Commons :: Rest Commons Library</name>
     <description>
@@ -61,17 +61,17 @@
 
     <properties>
         <!-- Versions -->
-        <feign.version>9.7.0</feign.version>
-        <lnd.jackson.version>3.1.0</lnd.jackson.version>
+        <feign.version>10.7.4</feign.version>
+        <lnd.jackson.version>3.2.0</lnd.jackson.version>
         <lnd.utils.version>3.2.0</lnd.utils.version>
-        <jackson-databind.version>2.9.9</jackson-databind.version>
+        <jackson-databind.version>2.10.2</jackson-databind.version>
         <commons-io.version>2.6</commons-io.version>
-        <wiremock.version>2.16.0</wiremock.version>
+        <wiremock.version>2.26.0</wiremock.version>
         <json.version>20190722</json.version>
-        <junit.version>4.12</junit.version>
-        <assertj-core.version>3.12.2</assertj-core.version>
-        <slf4j-api.version>1.7.28</slf4j-api.version>
-        <httpcore.version>4.4.6</httpcore.version>
+        <junit.version>4.13</junit.version>
+        <assertj-core.version>3.15.0</assertj-core.version>
+        <slf4j-api.version>1.7.30</slf4j-api.version>
+        <httpcore.version>4.4.13</httpcore.version>
     </properties>
 
     <dependencies>
