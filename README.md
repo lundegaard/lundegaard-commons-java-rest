@@ -1,4 +1,4 @@
-# Lundegaard Java Commons - Rest
+# Lundegaard Java Commons - Rest Client
 
 This library is used for simple creation of REST clients using the OpenFeign library. 
 
@@ -10,7 +10,7 @@ Just add it as dependency, e.g. into Maven (use the latest version)
 <dependency>
     <groupId>eu.lundegaard.commons.java</groupId>
     <artifactId>rest</artifactId>
-    <version>1.0.0</version>
+    <version>${lundegaard.commons.rest.version}</version>
 </dependency>
 ``` 
 
