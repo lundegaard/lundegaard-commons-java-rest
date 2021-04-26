@@ -65,7 +65,7 @@
         <lnd.jackson.version>3.2.0</lnd.jackson.version>
         <lnd.utils.version>3.2.0</lnd.utils.version>
         <jackson-databind.version>2.10.2</jackson-databind.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
         <wiremock.version>2.26.0</wiremock.version>
         <json.version>20190722</json.version>
         <junit.version>4.13</junit.version>
